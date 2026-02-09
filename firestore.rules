@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Flashcards: public read, no client writes (manage via Firebase Console)
+    match /flashcards/{cardId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Default: deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
